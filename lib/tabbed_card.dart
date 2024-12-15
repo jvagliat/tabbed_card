@@ -8,7 +8,7 @@ class TabbedCard extends StatefulWidget {
   const TabbedCard({
     super.key,
     required this.tabs,
-    this.contentPadding = const EdgeInsets.all(8),
+    this.contentPadding = const EdgeInsets.all(0),
     this.radius = 15,
     this.elevation = 8,
     this.cardColor,
@@ -38,7 +38,7 @@ class _TabbedCardState extends State<TabbedCard> {
   double get radius => widget.radius;
   EdgeInsets get contentPadding => widget.contentPadding;
   double get elevation => widget.elevation;
-  Color? get cardColor => widget.cardColor;
+  // Color? get cardColor => widget.cardColor;
 
   int _currentIndex = 0;
 
@@ -148,7 +148,7 @@ class _TabbedCardState extends State<TabbedCard> {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(radius)),
-          color: cardColor ?? Theme.of(context).colorScheme.surface.withOpacity(0.7),
+          color: widget.cardColor!=null?widget.cardColor!.withOpacity(0.7): Theme.of(context).colorScheme.surface.withOpacity(0.7),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -185,7 +185,7 @@ class _TabbedCardState extends State<TabbedCard> {
                         ),
                         decoration: BoxDecoration(
                           color: tab.options?.tabColor?.withOpacity(selected ? 1 : 0.5) ??
-                              (selected ? cardColor ?? Theme.of(context).colorScheme.surface : Colors.transparent),
+                              (selected ? widget.cardColor ?? Theme.of(context).colorScheme.surface : Colors.transparent),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(radius),
                             topRight: Radius.circular(radius),
