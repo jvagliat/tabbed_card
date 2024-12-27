@@ -12,6 +12,7 @@ class TabbedCard extends StatefulWidget {
     this.radius = 15,
     this.elevation = 8,
     this.cardColor,
+    this.backgroundColor = Colors.transparent
   }) : assert(tabs.length > 0);
 
   ///List of tabs
@@ -28,6 +29,8 @@ class TabbedCard extends StatefulWidget {
 
   ///The color of the Card (the tabs can be customizated with the TabbedCardItensOptions) - By default it is the ColorScheme.surface
   final Color? cardColor;
+
+  final Color backgroundColor;
 
   @override
   State<TabbedCard> createState() => _TabbedCardState();
@@ -140,7 +143,7 @@ class _TabbedCardState extends State<TabbedCard> {
   Widget build(BuildContext context) {
     return Material(
       elevation: elevation,
-      color: Colors.transparent,
+      color: widget.backgroundColor, //Colors.transparent,
       borderRadius: BorderRadius.all(Radius.circular(radius)),
       child: Container(
         constraints: const BoxConstraints(
@@ -148,12 +151,13 @@ class _TabbedCardState extends State<TabbedCard> {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(radius)),
-          color: widget.cardColor!=null?widget.cardColor!.withOpacity(0.7): Theme.of(context).colorScheme.surface.withOpacity(0.7),
+          color: widget.cardColor!=null?widget.cardColor!.withOpacity(0.5): Theme.of(context).colorScheme.surface.withOpacity(0.5),
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
+            Container(
+              // color: Colors.green,
               width: double.infinity,
               height: 40,
               key: _tabsKey,
@@ -184,8 +188,9 @@ class _TabbedCardState extends State<TabbedCard> {
                           horizontal: 15,
                         ),
                         decoration: BoxDecoration(
-                          color: tab.options?.tabColor?.withOpacity(selected ? 1 : 0.5) ??
-                              (selected ? widget.cardColor ?? Theme.of(context).colorScheme.surface : Colors.transparent),
+                          color: tab.options?.tabColor?.withOpacity(selected ? 1 : 0.7) ??
+                              (selected ?widget.cardColor: Theme.of(context).colorScheme.surface!.withOpacity(0.7)) , 
+                              //Theme.of(context).colorScheme.surface : Colors.transparent),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(radius),
                             topRight: Radius.circular(radius),
